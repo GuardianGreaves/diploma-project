@@ -1,0 +1,146 @@
+﻿<Window x:Class="OboskalovDiplom.Windows.WindowAuthorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        Width="710" Height="460" WindowStartupLocation="CenterScreen" Background="Transparent" AllowsTransparency="True" WindowStyle="None">
+
+    <Window.Effect>
+        <DropShadowEffect ShadowDepth="0" Direction="0" BlurRadius="10" Opacity="0.5" Color="Black"/>
+    </Window.Effect>
+
+    <Window.Resources>
+        <Storyboard x:Key="fadeInAnimation">
+            <DoubleAnimation Storyboard.TargetName="Messageregistr" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="fadeOutAnimation">
+            <DoubleAnimation Storyboard.TargetName="Messageregistr" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.2"/>
+        </Storyboard>
+
+        <Storyboard x:Key="AnimationCaptchaIn">
+            <DoubleAnimation Storyboard.TargetName="Captcha" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="AnimationCaptchaOut">
+            <DoubleAnimation Storyboard.TargetName="Captcha" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.2"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <Border x:Name="mainBorder" Background="Transparent" Margin="10" CornerRadius="30" MouseDown="Border_MouseDown">
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Левая часть-->
+            <Border Background="#0d43ca" CornerRadius="30 0 0 30" Panel.ZIndex="10">
+                <Grid>
+                    <Border Opacity="1" Width="98" Height="98" Background="White" CornerRadius="50" HorizontalAlignment="Center" Margin="101,55,101,287">
+                        <Ellipse Width="96" Height="96">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Image/KPK.jpg"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Border>
+                    <TextBlock x:Name="TextBlockHello" Visibility="Visible" Foreground="White" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="40" FontWeight="SemiBold" LineHeight="28" Margin="0,162,0,0"><Run Text="Добро"/><LineBreak/><Run Text="пожаловать !"/></TextBlock>
+                </Grid>
+            </Border>
+
+            <Grid Opacity="0" x:Name="Captcha" Panel.ZIndex="100" Width="270" Height="auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,215,15,15">
+                <Border Background="White" BorderBrush="Black" BorderThickness="0" CornerRadius="15">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="3" Direction="0" BlurRadius="5" Opacity="0.5" Color="Black"/>
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <Border x:Name="CapchaTextBox" Grid.Row="2" Width="100" VerticalAlignment="Center" Height="34" CornerRadius="5" BorderThickness="1" BorderBrush="Gray" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <TextBox Foreground="#808080" Padding="5 4 0 0" IsEnabled="False" x:Name="TextBoxCaptha" Grid.Row="2" HorizontalAlignment="Center" BorderThickness="0" Style="{StaticResource TextBoxDefaulBorder0}" Width="100" Height="34" TextChanged="TextBoxCaptha_TextChanged"/>
+                        </Border>
+                        <Button x:Name="CaptchaConfirm" IsEnabled="False" Grid.Row="3" FontSize="20" Content="Подтвердить" Height="36" Background="#0d43ca" Style="{StaticResource ButtonDefault}" Margin="10,5,10,9"  Click="CaptchaConfirm_Click"/>
+                        <Button Style="{StaticResource ButtonRefreshCaptcha}" IsEnabled="true" Grid.Row="2" Background="LightGray" Height="34" Width="34" VerticalAlignment="Center" Margin="226,0,0,0" Click="Button_Click_2">
+                            <iconPacks:PackIconMaterial Kind="Refresh"/>
+                        </Button>
+                        <Image x:Name="captchaImage" Height="36" Grid.Row="2" Width="100" Margin="118,7,52,7" />
+                        <TextBlock Grid.Row="0" Text="Ошибка входа!" FontWeight="SemiBold" FontSize="22" Foreground="#0d43ca" TextWrapping="Wrap" Margin="10 5 10 5"/>
+                        <TextBlock x:Name="TextBloxCapchaText" Grid.Row="1" Text="Слишком много неудачных попыток входа. Введите капчу для продолжения" FontSize="18" Foreground="#0d43ca" Padding="0 0 0 0" TextWrapping="Wrap" Margin="10 0 10 0"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+            <!--Правая часть-->
+            <Border Grid.Column="1" Margin="0 0 10 0" Background="White" CornerRadius="0 30 30 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140"/>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Авторизация" Foreground="#0d43ca" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="26,0,117,15" FontSize="40" FontWeight="SemiBold" LineHeight="28"/>
+
+                    <Border Grid.Row="1" Grid.Column="1" Width="340" Height="36" CornerRadius="5" BorderThickness="1" BorderBrush="Gray">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="34" Height="34" Background="Transparent" CornerRadius="100" VerticalAlignment="Center">
+                                <iconPacks:PackIconMaterial Kind="EmailOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" Height="22" Foreground="Gray"/>
+                            </Border>
+                            <TextBox x:Name="TextBoxLogin" Panel.ZIndex="1" Grid.Column="1" HorizontalAlignment="Left" BorderThickness="0" Style="{StaticResource TextBoxDefaulBorder0}" Width="300" TextChanged="TextBoxLogin_TextChanged" GotFocus="TextBoxLogin_GotFocus"/>
+                            <TextBlock x:Name="TextBlockLogin" Panel.ZIndex="0" Grid.Column="1" Text="Логин" FontSize="18" Foreground="#808080" Padding="2 4 0 0" Width="70" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="1" Width="340" Height="36" CornerRadius="5" BorderThickness="1" BorderBrush="Gray">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="34" Height="34" Background="Transparent" CornerRadius="100" VerticalAlignment="Center">
+                                <iconPacks:PackIconMaterial Kind="LockOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" Height="22" Foreground="Gray"/>
+                            </Border>
+                            <PasswordBox Style="{StaticResource TextBoxDefaulBorder0}" x:Name="TextBoxPassword" Panel.ZIndex="1" Grid.Column="1" HorizontalAlignment="Left" BorderThickness="0" Width="300" PasswordChanged="TextBoxPassword_PasswordChanged"/>
+                            <TextBlock x:Name="TextBlockPassword" Panel.ZIndex="0" Grid.Column="1" Text="Пароль" FontSize="18" Foreground="#808080" Padding="2 4 0 0" Width="70" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </Border>
+
+                    <Button x:Name="SignIn" FontSize="22" Content="Войти" Grid.Row="3" Height="38" Background="#0d43ca" Style="{StaticResource ButtonDefault}" Margin="260,7,30,130" Click="SignIn_Click"/>
+
+                    <Button Background="Transparent" HorizontalAlignment="Right" BorderThickness="0" Foreground="Gray" Click="Button_Click" Height="24" Width="24" Margin="0,13,13,103">
+                        <iconPacks:PackIconMaterial Kind="Close"/>
+                    </Button>
+
+                </Grid>
+            </Border>
+
+            <Border x:Name="Messageregistr" Panel.ZIndex="100" Opacity="0" Width="370" Height="120" Grid.ColumnSpan="2" Margin="175,315,155,5">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="3" Direction="0" BlurRadius="5" Opacity="0.5" Color="Black"/>
+                </Border.Effect>
+
+                <Grid Panel.ZIndex="100" Width="350" Height="100" Grid.ColumnSpan="2" Margin="10">
+                    <Border x:Name="FilterPopupBorder" Background="White" BorderBrush="Black" BorderThickness="0" CornerRadius="15">
+                        <Grid>
+                            <TextBlock x:Name="TextBlockRegTitle" Text="Сообщение" FontWeight="SemiBold" FontSize="20" Foreground="#0d43ca" Padding="0 2 0 0" TextWrapping="Wrap" Margin="15,6,15,10"/>
+                            <TextBlock x:Name="TextBlockReg" Text="Регистрировать пользователя может только сотрудник" FontSize="16" Foreground="#0d43ca" Padding="0 2 0 0" TextWrapping="Wrap" Margin="15,35,15,10"/>
+                        </Grid>
+                    </Border>
+
+                    <Button x:Name="ButtonCloseMessage" IsEnabled="False" Style="{StaticResource ButtonWindowControl}"  Background="Transparent" Click="ButtonCloseMessage_Click" Height="22" Width="22" Panel.ZIndex="10" Margin="322,5,0,73">
+                        <iconPacks:PackIconMaterial Kind="Close"/>
+                    </Button>
+                </Grid>
+
+            </Border>
+        </Grid>
+    </Border>
+</Window>
